@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Customizer</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f2f2f2; }
+        .container { background: white; padding: 20px; border-radius: 10px; max-width: 800px; margin: auto; }
+        textarea { width: 100%; height: 100px; }
+        .result { margin-top: 20px; background: #e8f0fe; padding: 10px; border-radius: 5px; white-space: pre-wrap; }
+        input[type=submit] { padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎯 Resume Customizer using GenAI</h2>
+        <form method="post">
+            <label for="job_description">Paste the Job Description:</label><br>
+            <textarea name="job_description" required></textarea><br><br>
+            <input type="submit" value="Generate Resume">
+        </form>
+        {% if result %}
+            <div class="result">
+                <h3>Customized Resume Content:</h3>
+                <p>{{ result }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>  

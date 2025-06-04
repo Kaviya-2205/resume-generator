@@ -1,40 +1,57 @@
-from flask import Flask, request, jsonify
 import torch
-from model import ResumeModel  # Your model class
-from tokenizer import Tokenizer # Your tokenizer class
+import torch.nn as nn
+from flask import Flask, request, render_template
+from model import ResumeModel
+import pickle
+import json
 
-app = Flask(__name__)
+# Load tokenizer vocab
+with open("tokenizer_vocab.json") as f:
+    vocab = json.load(f)
+inverse_vocab = {int(v): k for k, v in vocab.items()}
+vocab_size = len(vocab)
 
-# Load tokenizer and model
-tokenizer = Tokenizer()
-tokenizer.load(r"C:\copied desktop\New folder\ResumeCustomizerProject\tokenizer.py")  # Adjust path or load method as you have
-
-vocab_size = len(tokenizer.token2id)
+# Load model
 model = ResumeModel(vocab_size)
-model.load_state_dict(torch.load(r"C:\copied desktop\New folder\ResumeCustomizerProject\model.py", map_location='cpu'))
+model.load_state_dict(torch.load("resume_model.pth"))
 model.eval()
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.json
-    text = data.get('text', '')
+# Tokenizer class for encoding input
+class Tokenizer:
+    def __init__(self, vocab):
+        self.vocab = vocab
+        self.inverse_vocab = {v: k for k, v in vocab.items()}
 
-    # Tokenize input text (adjust based on your tokenizer)
-    input_ids = tokenizer.encode(text)
+    def encode(self, text, max_len=50):
+        tokens = [self.vocab.get(word, self.vocab["<UNK>"]) for word in text.lower().split()]
+        tokens = tokens[:max_len] + [0] * (max_len - len(tokens))
+        return tokens
+
+    def decode(self, token_ids):
+        words = [inverse_vocab.get(int(idx), "<UNK>") for idx in token_ids if idx != 0]
+        return ' '.join(words)
+
+tokenizer = Tokenizer(vocab)
+
+# Inference
+def generate_resume(job_description, max_len=50):
+    input_ids = tokenizer.encode(job_description, max_len)
     input_tensor = torch.tensor([input_ids])
-
     with torch.no_grad():
-        output = model.generate(input_tensor)  # You may need to implement generate or use your model forward method
+        outputs = model(input_tensor)
+        predicted_ids = torch.argmax(outputs, dim=2).squeeze().tolist()
+    return tokenizer.decode(predicted_ids)
 
-    # Decode model output to readable text (adjust as needed)
-    result_text = tokenizer.decode(output[0].tolist())
+# Flask App
+app = Flask(__name__)
 
-    return jsonify({'result': result_text})
+@app.route("/", methods=["GET", "POST"])
+def index():
+    generated_resume = ""
+    if request.method == "POST":
+        job_description = request.form["job_description"]
+        generated_resume = generate_resume(job_description)
+    return render_template("index.html", result=generated_resume)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
-    import pickle
-
-# Save tokenizer
-with open("tokenizer.pkl", "rb") as f:
-    tokenizer = pickel.load(f)

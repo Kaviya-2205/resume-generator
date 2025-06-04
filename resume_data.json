@@ -1,10 +1,17 @@
 [
   {
-    "resume": "Experienced data scientist with Python and ML expertise.",
-    "job_description": "Looking for a skilled data scientist with experience in Python and machine learning."
+    "resume_text": "Experienced software developer with skills in Python, Django, and SQL. Built and deployed multiple web applications. Excellent problem-solving abilities.",
+    "job_description": "Looking for a Python backend developer with experience in Django and database design.",
+    "objective": "To obtain the role of a Python backend developer where I can apply my Django expertise and database knowledge."
   },
   {
-    "resume": "Software engineer with strong skills in Java and backend development.",
-    "job_description": "Seeking a backend engineer experienced in Java and server-side architecture."
-  }
+    "resume_text": "Mechanical engineer with 3 years of experience in designing automotive components and working with CAD tools like SolidWorks and AutoCAD.",
+    "job_description": "Hiring a mechanical design engineer with experience in CAD modeling and product development.",
+    "objective": "To contribute my mechanical design expertise and CAD skills in a challenging engineering environment."
+  },
+  {
+    "resume_text": "Recent graduate in Computer Science. Completed internships in data science and machine learning. Strong knowledge in Python, Pandas, and scikit-learn.",
+    "job_description": "Seeking a fresher for a machine learning intern position with knowledge of Python and data libraries.",
+    "objective": "To kickstart my career in machine learning by utilizing my Python and data science skills in a real-world internship."
+  }
 ]

@@ -2,72 +2,96 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import json
-import pickle
-from tokenizer import Tokenizer
+from torch.utils.data import Dataset, DataLoader
 from model import ResumeModel
-from torch.utils.data import DataLoader, Dataset
 
-# Custom dataset
+# Tokenizer class
+class Tokenizer:
+    def __init__(self):
+        self.vocab = {"<PAD>": 0, "<UNK>": 1}
+        self.inverse_vocab = {}
+
+    def build_vocab(self, texts):
+        idx = len(self.vocab)
+        for text in texts:
+            for word in text.lower().split():
+                if word not in self.vocab:
+                    self.vocab[word] = idx
+                    idx += 1
+        self.inverse_vocab = {idx: word for word, idx in self.vocab.items()}
+
+    def encode(self, text, max_len=50):
+        tokens = [self.vocab.get(word, self.vocab["<UNK>"]) for word in text.lower().split()]
+        tokens = tokens[:max_len] + [0] * (max_len - len(tokens))
+        return tokens
+
+    def save(self, path="tokenizer.pkl"):
+        import pickle
+        with open(path, "wb") as f:
+            pickle.dump(self.vocab, f)
+
+# Dataset class
 class ResumeDataset(Dataset):
-    def __init__(self, data, tokenizer):
-        self.data = data
-        self.tokenizer = tokenizer
+    def __init__(self, data, tokenizer, max_len=50):
+        self.samples = []
+        for item in data:
+            # Use job_description as input and resume_text + objective as target
+            input_text = item["job_description"]
+            target_text = item["resume_text"] + " " + item["objective"]
+            self.samples.append((tokenizer.encode(input_text, max_len), tokenizer.encode(target_text, max_len)))
 
     def __len__(self):
-        return len(self.data)
+        return len(self.samples)
 
     def __getitem__(self, idx):
-        item = self.data[idx]
-        src = self.tokenizer.encode(item["resume"])
-        tgt = self.tokenizer.encode(item["job_description"])
-        return torch.tensor(src, dtype=torch.long), torch.tensor(tgt, dtype=torch.long)
+        x, y = self.samples[idx]
+        return torch.tensor(x), torch.tensor(y)
 
 # Load data
-with open("resume_data.json", "r", encoding="utf-8") as f:
+with open("resume_data.json") as f:
     data = json.load(f)
 
-# Tokenizer
+# Build vocab from all texts combined (input + target)
+all_texts = []
+for item in data:
+    all_texts.append(item["job_description"])
+    all_texts.append(item["resume_text"])
+    all_texts.append(item["objective"])
+
 tokenizer = Tokenizer()
-tokenizer.build_vocab([item["resume"] + item["job_description"] for item in data])
-
-# Save tokenizer
-with open("tokenizer.pkl", "wb") as f:
-    pickle.dump(tokenizer, f)
-
-# Model
-model = ResumeModel(vocab_size=tokenizer.vocab_size, d_model=128, nhead=8, num_layers=2)
-optimizer = optim.Adam(model.parameters(), lr=0.001)
-criterion = nn.CrossEntropyLoss(ignore_index=0)
+tokenizer.build_vocab(all_texts)
+tokenizer.save()
 
 # Dataset and DataLoader
 dataset = ResumeDataset(data, tokenizer)
-dataloader = DataLoader(dataset, batch_size=2, shuffle=True, collate_fn=lambda x: x)
+loader = DataLoader(dataset, batch_size=2, shuffle=True)  # batch size 2 for example
+
+# Model initialization
+vocab_size = len(tokenizer.vocab)
+model = ResumeModel(vocab_size)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Training loop
-for epoch in range(1, 4):
-    model.train()
+num_epochs = 5
+for epoch in range(num_epochs):
     total_loss = 0
-
-    for batch in dataloader:
+    for inputs, targets in loader:
+        outputs = model(inputs)  
+        
+        outputs = outputs.view(-1, vocab_size)
+        targets = targets.view(-1)
+        
+        loss = criterion(outputs, targets)
+        
         optimizer.zero_grad()
-        src_batch, tgt_batch = zip(*batch)
-
-        # Pad to same length
-        max_src_len = max(len(x) for x in src_batch)
-        max_tgt_len = max(len(x) for x in tgt_batch)
-
-        src_batch = [torch.cat([x, torch.zeros(max_src_len - len(x), dtype=torch.long)]) for x in src_batch]
-        tgt_batch = [torch.cat([x, torch.zeros(max_tgt_len - len(x), dtype=torch.long)]) for x in tgt_batch]
-
-        src = torch.stack(src_batch)
-        tgt = torch.stack(tgt_batch)
-
-        outputs = model(src, tgt[:, :-1])
-        loss = criterion(outputs.reshape(-1, tokenizer.vocab_size), tgt[:, 1:].reshape(-1))
         loss.backward()
         optimizer.step()
+        
         total_loss += loss.item()
 
-    print(f"Epoch {epoch}, Loss: {total_loss:.4f}")
+    print(f"Epoch {epoch+1}/{num_epochs}, Loss: {total_loss:.4f}")
 
-    torch.save(model.state_dict(), f"resume_model_epoch_{epoch}.pth")
+# Save model
+torch.save(model.state_dict(), "resume_model.pth")
+print("✅ Model training complete. Saved as resume_model.pth")

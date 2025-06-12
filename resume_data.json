@@ -1,17 +1,32 @@
 [
   {
-    "resume_text": "Experienced software developer with skills in Python, Django, and SQL. Built and deployed multiple web applications. Excellent problem-solving abilities.",
-    "job_description": "Looking for a Python backend developer with experience in Django and database design.",
-    "objective": "To obtain the role of a Python backend developer where I can apply my Django expertise and database knowledge."
+    "name": "Kaviya",
+    "email": "kaviyah0120@gmail.com",
+    "phone": "08489880882",
+    "education": "B.Tech in Computer Science",
+    "certification": "Python Programming Certificate",
+    "skills": "Python, Machine Learning",
+    "projects": "Smart Attendance System",
+    "objective": "I am a dedicated and detail-oriented software developer with strong problem-solving abilities. With hands-on experience in building practical AI applications, I am passionate about delivering scalable and user-friendly solutions. I bring a positive attitude, quick learning skills, and a collaborative mindset to every project. My goal is to contribute to innovative tech initiatives that make a real-world impact."
   },
   {
-    "resume_text": "Mechanical engineer with 3 years of experience in designing automotive components and working with CAD tools like SolidWorks and AutoCAD.",
-    "job_description": "Hiring a mechanical design engineer with experience in CAD modeling and product development.",
-    "objective": "To contribute my mechanical design expertise and CAD skills in a challenging engineering environment."
+    "name": "Keerthana",
+    "email": "keerthana123@gmail.com",
+    "phone": "9845671230",
+    "education": "B.E in Electronics and Communication",
+    "certification": "AI Certification from Coursera",
+    "skills": "C++, Deep Learning",
+    "projects": "Gesture Recognition using CNN",
+    "objective": "I am an enthusiastic ECE student with a passion for Artificial Intelligence and Computer Vision. I have built a gesture recognition system using CNN and enjoy turning technical ideas into real-world applications. With a curious mind and strong coding background, I aim to grow as a tech innovator in the AI space."
   },
   {
-    "resume_text": "Recent graduate in Computer Science. Completed internships in data science and machine learning. Strong knowledge in Python, Pandas, and scikit-learn.",
-    "job_description": "Seeking a fresher for a machine learning intern position with knowledge of Python and data libraries.",
-    "objective": "To kickstart my career in machine learning by utilizing my Python and data science skills in a real-world internship."
-  }
+    "name": "Jayasika",
+    "email": "jayasika.aids@gmail.com",
+    "phone": "9090101010",
+    "education": "B.Tech in Artificial Intelligence and Data Science",
+    "certification": "Full Stack Web Development",
+    "skills": "HTML, CSS, JavaScript, Python",
+    "projects": "AI-based Chatbot",
+    "objective": "A motivated AI&DS student passionate about building intelligent digital tools. I have developed an AI chatbot and enjoy solving problems through full-stack development. I’m committed to continuous learning and contributing to meaningful tech solutions in the AI field."
+  }
 ]

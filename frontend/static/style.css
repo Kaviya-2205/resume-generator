@@ -1,0 +1,121 @@
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.form-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+  transition: all 0.5s ease;
+  animation: slideIn 1s ease-in-out;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  color: #00ffff;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  color: white;
+  font-size: 14px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border: 2px solid #00ffff;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #00ffff;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #00cccc;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* Common resume section */
+.resume-section {
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 800px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------------------------- */
+/* Template: Simple             */
+/* ---------------------------- */
+body.simple .resume-section {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* ---------------------------- */
+/* Template: Modern             */
+/* ---------------------------- */
+body.modern .resume-section {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f8ff;
+  color: #2c3e50;
+  border-left: 6px solid #3498db;
+}
+
+body.modern h2,
+body.modern h3 {
+  color: #2980b9;
+}
+
+/* ---------------------------- */
+/* Template: Professional       */
+/* ---------------------------- */
+body.professional .resume-section {
+  font-family: 'Times New Roman', serif;
+  background-color: #fffaf0;
+  color: #333333;
+  border: 2px solid #555555;
+  padding: 30px;
+}
+
+body.professional h3 {
+  border-bottom: 1px solid #aaa;
+  padding-bottom: 4px;
+}

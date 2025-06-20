@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Customizer - Input</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body class="dark-mode">
+  <div class="form-container animate-slide-in">
+    <h1 class="title">Resume Customizer</h1>
+    <form action="/preview" method="POST" enctype="multipart/form-data">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="text" name="phone" placeholder="Phone Number" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+      <textarea name="education" placeholder="Education Details" required></textarea>
+      <textarea name="skills" placeholder="Skills" required></textarea>
+      <textarea name="projects" placeholder="Projects" required></textarea>
+      <textarea name="certifications" placeholder="Certifications" required></textarea>
+      <textarea name="description" placeholder="Short Description" required></textarea>
+
+      <!-- Resume Upload -->
+<label for="resume_upload" class="block text-sm font-medium text-gray-200 mt-4">Upload Existing Resume (Optional - .docx):</label>
+<input type="file" name="resume_upload" accept=".docx" class="w-full bg-gray-700 text-white px-4 py-2 rounded mt-1" />
+
+<!-- OR Paste Text -->
+<label for="resume_text" class="block text-sm font-medium text-gray-200 mt-4">OR Paste Existing Resume Text:</label>
+<textarea id="resume_text" name="resume_text" rows="5"
+  placeholder="Paste your existing resume here..."
+  class="w-full bg-gray-700 text-white px-4 py-2 rounded mt-1 resize-none"></textarea>
+      <textarea name="job_desc" placeholder="Paste Job Description" required></textarea>
+
+      <label>Select Template Style:</label>
+      <select name="template" required>
+        <option value="simple">Simple</option>
+        <option value="modern">Modern</option>
+        <option value="professional">Professional</option>
+      </select>
+      
+      <button type="submit">Generate Resume</button>
+    </form>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

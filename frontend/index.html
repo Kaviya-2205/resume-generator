@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume Generator - Input</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="dark-mode">
+  <div class="form-container">
+    <h1 class="title">Resume Generator AI</h1>
+    <form id="resumeForm">
+      <input type="text" id="name" name="name" placeholder="Full Name" required />
+      <input type="email" id="email" name="email" placeholder="Email Address" required />
+      <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
+      <input type="text" id="skills" name="skills" placeholder="Skills (comma separated)" required />
+      <textarea id="projects" name="projects" placeholder="Projects (comma separated)" required></textarea>
+      <textarea id="certificates" name="certificates" placeholder="Certificates (comma separated)"></textarea>
+      <textarea id="job_description" name="job_description" placeholder="Paste the Job Description here..." required></textarea>
+      <input type="hidden" id="short_resume_text" name="short_resume_text" value="Passionate learner with real-world tech project experience." />
+      <select id="template" name="template_style" required>
+        <option value="" disabled selected>Select Resume Template</option>
+        <option value="simple">Simple</option>
+        <option value="modern">Modern</option>
+        <option value="professional">Professional</option>
+      </select>
+      <button type="submit">Next →</button>
+    </form>
+  </div>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

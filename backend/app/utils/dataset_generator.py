@@ -67,7 +67,7 @@ def generate_sample():
     }
 
 
-def generate_dataset(n_samples=5000 or 10000, save_path="ResumeGenAIBackend/dataset.json"):
+def generate_dataset(n_samples=5000, save_path="ResumeGenAIBackend/dataset.json"):
     dataset = [generate_sample() for _ in range(n_samples)]
 
     os.makedirs(os.path.dirname(save_path), exist_ok=True)

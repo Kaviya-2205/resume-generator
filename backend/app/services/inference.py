@@ -1,7 +1,7 @@
 # ResumeGenAIBackend/app/services/inference.py
 
 import torch
-from models.gen_model import ResumeObjectiveGenerator
+from app.models.gen_model import ResumeObjectiveGenerator
 from app.utils.preprocess import TextPreprocessor
 import os
 
@@ -59,11 +59,11 @@ def generate_resume_output(user_input):
     model, preprocessor = load_model()
 
     prompt = (
-        f"{user_input['short_resume_text']} "
-        f"Skills: {', '.join(user_input['skills'])}. "
-        f"Projects: {', '.join(user_input['projects'])}. "
-        f"Certificates: {', '.join(user_input['certificates'])}. "
-        f"Job: {user_input['job_description']}"
+    f"{user_input['short_resume_text']} "
+    f"Skills: {', '.join(user_input['skills'])}. "
+    f"Projects: {', '.join(user_input['projects'])}. "
+    f"Certificates: {', '.join(user_input['certificates'])}. "
+    f"Job: {user_input['job_description']}"
     )
 
     full_text = generate_text(prompt, model, preprocessor)

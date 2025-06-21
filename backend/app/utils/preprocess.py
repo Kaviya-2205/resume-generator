@@ -14,7 +14,7 @@ class TextPreprocessor:
     def tokenize(self, text):
         # Basic tokenization (lowercased words and punctuation separated)
         text = text.lower()
-        text = re.sub(r"[^a-z0-9\s.,!?]", "", text)
+        text = re.sub(r"[^a-z0-9\s.,!?'\-]", "", text)
         tokens = text.strip().split()
         return tokens
 

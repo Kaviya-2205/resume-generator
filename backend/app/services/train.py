@@ -9,9 +9,9 @@ from app.utils.preprocess import TextPreprocessor
 from app.models.gen_model import ResumeObjectiveGenerator
 
 DATASET_PATH = "ResumeGenAIBackend/dataset.json"
-MODEL_SAVE_PATH = "ResumeGenAIBackend/saved_models/model.pth"
+MODEL_SAVE_PATH = "ResumeGenAIBackend/saved_models/gen_model.pth"
 BATCH_SIZE = 16
-EPOCHS = 30 or 50
+EPOCHS = 30 
 EMBEDDING_DIM = 256
 HIDDEN_DIM = 512
 LEARNING_RATE = 0.003

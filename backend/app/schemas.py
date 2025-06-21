@@ -10,8 +10,8 @@ class ResumeInput(BaseModel):
     skills: List[str]
     projects: List[str]
     certificates: List[str]
-    short_resume_text: str
     job_description: str
+    short_resume_text: str
 
 class ResumeOutput(BaseModel):
     name: str

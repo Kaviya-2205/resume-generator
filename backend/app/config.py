@@ -3,7 +3,7 @@
 import os
 
 # File paths
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(_file_)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DATASET_PATH = os.path.join(BASE_DIR, "dataset.json")
 MODEL_PATH = os.path.join(BASE_DIR, "saved_models", "model.pth")
